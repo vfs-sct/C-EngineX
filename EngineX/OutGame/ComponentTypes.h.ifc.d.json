@@ -1,11 +1,11 @@
 {
     "Version": "1.2",
     "Data": {
-        "Source": "c:\\users\\pg27haneul\\documents\\enginexforstudent\\game\\public\\components\\componenttypes.h",
+        "Source": "c:\\users\\public\\repos\\c-enginex2\\enginex\\game\\public\\components\\componenttypes.h",
         "ProvidedModule": "",
         "Includes": [
-            "c:\\users\\pg27haneul\\documents\\enginexforstudent\\game\\public\\components\\component.h",
-            "c:\\users\\pg27haneul\\documents\\enginexforstudent\\game\\public\\gamecore\\gamecore.h",
+            "c:\\users\\public\\repos\\c-enginex2\\enginex\\game\\public\\components\\component.h",
+            "c:\\users\\public\\repos\\c-enginex2\\enginex\\game\\public\\gamecore\\gamecore.h",
             "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.42.34433\\include\\string",
             "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.42.34433\\include\\yvals_core.h",
             "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.42.34433\\include\\vcruntime.h",
@@ -127,15 +127,15 @@
             "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.42.34433\\include\\algorithm",
             "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.42.34433\\include\\__msvc_heap_algorithms.hpp",
             "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.42.34433\\include\\__msvc_minmax.hpp",
-            "c:\\users\\pg27haneul\\documents\\enginexforstudent\\game\\public\\components\\transformcomponent.h",
-            "c:\\users\\pg27haneul\\documents\\enginexforstudent\\engine\\public\\enginetypes.h",
-            "c:\\users\\pg27haneul\\documents\\enginexforstudent\\game\\public\\components\\rendercomponent.h",
-            "c:\\users\\pg27haneul\\documents\\enginexforstudent\\game\\public\\components\\circlerendercomponent.h",
-            "c:\\users\\pg27haneul\\documents\\enginexforstudent\\game\\public\\components\\boxrendercomponent.h",
-            "c:\\users\\pg27haneul\\documents\\enginexforstudent\\game\\public\\components\\physicscomponent.h",
-            "c:\\users\\pg27haneul\\documents\\enginexforstudent\\game\\public\\components\\circlecollidercomponent.h",
-            "c:\\users\\pg27haneul\\documents\\enginexforstudent\\game\\public\\components\\boxcollidercomponent.h",
-            "c:\\users\\pg27haneul\\documents\\enginexforstudent\\game\\public\\components\\textrendercomponent.h"
+            "c:\\users\\public\\repos\\c-enginex2\\enginex\\game\\public\\components\\transformcomponent.h",
+            "c:\\users\\public\\repos\\c-enginex2\\enginex\\engine\\public\\enginetypes.h",
+            "c:\\users\\public\\repos\\c-enginex2\\enginex\\game\\public\\components\\rendercomponent.h",
+            "c:\\users\\public\\repos\\c-enginex2\\enginex\\game\\public\\components\\circlerendercomponent.h",
+            "c:\\users\\public\\repos\\c-enginex2\\enginex\\game\\public\\components\\boxrendercomponent.h",
+            "c:\\users\\public\\repos\\c-enginex2\\enginex\\game\\public\\components\\physicscomponent.h",
+            "c:\\users\\public\\repos\\c-enginex2\\enginex\\game\\public\\components\\circlecollidercomponent.h",
+            "c:\\users\\public\\repos\\c-enginex2\\enginex\\game\\public\\components\\boxcollidercomponent.h",
+            "c:\\users\\public\\repos\\c-enginex2\\enginex\\game\\public\\components\\textrendercomponent.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []
