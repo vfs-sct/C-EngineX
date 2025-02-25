@@ -21,7 +21,7 @@ public:
 
 protected:
 
-	BoxColliderComponent(std::weak_ptr<Actor> owner, float width, float height, exVector2 velocity, bool isStatic = false, bool isGravityEnabled = false);
+	BoxColliderComponent(std::weak_ptr<Actor> owner, float width, float height, exVector2 velocity, bool isBoarder = true ,bool isStatic = false, bool isGravityEnabled = false);
 
 	virtual bool CanAddComponent() const override;
 	virtual bool IsCollisionDetected(std::weak_ptr<PhysicsComponent>& otherComponent) override;

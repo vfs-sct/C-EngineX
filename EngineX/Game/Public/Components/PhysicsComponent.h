@@ -26,7 +26,7 @@ public:
 
 protected:
 
-	PhysicsComponent(std::weak_ptr<Actor> owner, exVector2 velocity = { 0.0f,0.0f }, bool isStatic = false, bool isGravityEnabled = false);
+	PhysicsComponent(std::weak_ptr<Actor> owner, exVector2 velocity = { 0.0f,0.0f }, bool isBoarder = true, bool isStatic = false, bool isGravityEnabled = false);
 
 	virtual void InitializeComponent() override;
 	virtual bool CanAddComponent() const override;
@@ -41,7 +41,15 @@ public:
 	void ListenForCollision(CollisionEventSignature& delegateToAdd);
 	void StopListeningForCollision(CollisionEventSignature& delegateToRemove);
 
+	bool GetIsBoarder()
+	{
+		return mIsBoarder;
+	}
 
+	void SetIsBoarder(bool IsBoarder)
+	{
+		mIsBoarder = IsBoarder;
+	}
 
 #pragma endregion
 
@@ -53,6 +61,7 @@ private:
 
 	unsigned int mIsStatic : 1;
 	unsigned int mIsGravityEnabled : 1;
+	unsigned int mIsBoarder : 1;
 	exVector2 mVelocity;
 
 	std::list<CollisionEventSignature> mCollisionEvents;

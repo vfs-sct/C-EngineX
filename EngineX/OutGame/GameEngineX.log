@@ -1,30 +1,5 @@
 ﻿  Scanning sources for module dependencies...
-  ComponentTypes.h
-  Compiling...
-  ComponentTypes.h
-  BoxColliderComponent.cpp
   CircleColliderComponent.cpp
-  BoxRenderComponent.cpp
-  CircleRenderComponent.cpp
-  Component.cpp
-  Actor.cpp
-  Game.cpp
-  Main.cpp
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winbase.h(9531,5): warning C5105: macro expansion producing 'defined' has undefined behavior
-  (compiling source file 'Game/Private/Main.cpp')
-  
-  TransformComponent.cpp
-  RenderComponent.cpp
-  RenderEnginge.cpp
   PhysicsComponent.cpp
-  PhysicsEngine.cpp
-  Ball.cpp
-  StateMachine.cpp
-  State.cpp
-  Out.cpp
-  TextRenderComponent.cpp
   Generating Code...
-EngineXd.lib(Engine.obj) : warning LNK4099: PDB '' was not found with 'EngineXd.lib(Engine.obj)' or at ''; linking object as if no debug info
-EngineXd.lib(RenderPacket.obj) : warning LNK4099: PDB '' was not found with 'EngineXd.lib(RenderPacket.obj)' or at ''; linking object as if no debug info
-EngineXd.lib(System.obj) : warning LNK4099: PDB '' was not found with 'EngineXd.lib(System.obj)' or at ''; linking object as if no debug info
   GameEngineX.vcxproj -> C:\Users\Public\Repos\C-EngineX2\EngineX\Build\GameEngineXd.exe

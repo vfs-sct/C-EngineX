@@ -22,7 +22,7 @@ void TextRenderComponent::Render(exEngineInterface* renderInterface)
 			}
 		}
 		CenterPos += mRenderOffset;
-		renderInterface->DrawText(1, CenterPos, mText, mColor, mLayerId);
+		renderInterface->DrawText(0, CenterPos, mText, mColor, mLayerId);
 	}
 }
 

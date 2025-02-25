@@ -87,11 +87,11 @@ bool CircleColliderComponent::IsCollisionDetectedWithBox(std::weak_ptr<BoxCollid
 				
 				if (DistanceSquaredY < (HeightSum * HeightSum) && DistanceSquaredX < (WidthSum * WidthSum))
 				{
+					SetIsBoarder(false);
 					return true;
 				}
 			}
 		}
 	}
-
 	return false;
 }

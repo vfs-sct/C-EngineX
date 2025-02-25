@@ -3,8 +3,8 @@
 #include "Game/Public/Components/TransformComponent.h"
 #include "Game/Public/Actors/Actor.h"
 
-BoxColliderComponent::BoxColliderComponent(std::weak_ptr<Actor> owner, float width, float height, exVector2 velocity, bool isStatic, bool isGravityEnabled) :
-	PhysicsComponent(owner, velocity,isStatic,isGravityEnabled)
+BoxColliderComponent::BoxColliderComponent(std::weak_ptr<Actor> owner, float width, float height, exVector2 velocity, bool isBoarder, bool isStatic, bool isGravityEnabled) :
+	PhysicsComponent(owner, velocity, isBoarder,isStatic,isGravityEnabled)
 	,mWidth(width)
 	,mHeight(height)
 {
@@ -94,6 +94,7 @@ bool BoxColliderComponent::IsCollisionDetectedWithCircle(std::weak_ptr<CircleCol
 
 				if (DistanceSquaredY < (HeightSum * HeightSum) && DistanceSquaredX < (WidthSum * WidthSum))
 				{
+					otherComponent.lock()->SetIsBoarder(GetIsBoarder());
 					return true;
 				}
 			}

@@ -80,10 +80,9 @@ void MyGame::Initialize(exEngineInterface* pEngine)
 	Character2->AddComponentOfType<TransformComponent>(exVector2(730.0f, 300.0f));
 	Character2->AddComponentOfType<BoxRenderComponent>(5.0f, 100.0f);
 	Character2->AddComponentOfType<BoxColliderComponent>(5.0f, 100.0f, exVector2(0.0f, 0.0f));
-	//Character2->AddComponentOfType<TextRenderComponent>("h6i");
 	mPlayer2 = Character2->FindComponentOfType<TransformComponent>()->GetLocation();
 
-	mBall = std::make_shared<Ball>("Ball", exColor({ 150,20,30,255 }), exVector2(400.0f, 300.0f), exVector2(2.0f, 0.0f));
+	mBall = std::make_shared<Ball>("Ball", exColor({ 150,20,30,255 }), exVector2(400.0f, 300.0f), exVector2(2.0f, 3.0f));
 	mBall->BeginPlay();
 
 	mOut1 = std::make_shared<Out>("out Line", exColor({ 150,20,30,255 }), exVector2(820, 300.0f), exVector2(0.0f, 0.0f));
@@ -96,13 +95,13 @@ void MyGame::Initialize(exEngineInterface* pEngine)
 	mTopWall = std::make_shared<Actor>();
 	mTopWall->AddComponentOfType<TransformComponent>(exVector2(400.0f, 10.0f));
 	mTopWall->AddComponentOfType<BoxRenderComponent>(800.0f, 20.0f, exColor({ 0,0,0,255 }));
-	mTopWall->AddComponentOfType<BoxColliderComponent>(800.0f, 20.0f, exVector2(0.0f, 0.0f));
+	mTopWall->AddComponentOfType<BoxColliderComponent>(800.0f, 20.0f, exVector2(0.0f, 0.0f), true);
 
 	// Create bottom wall
 	mBottomWall = std::make_shared<Actor>();
 	mBottomWall->AddComponentOfType<TransformComponent>(exVector2(400.0f, 590.0f));
 	mBottomWall->AddComponentOfType<BoxRenderComponent>(800.0f, 20.0f, exColor({ 0,0,0,255 }));
-	mBottomWall->AddComponentOfType<BoxColliderComponent>(800.0f, 20.0f, exVector2(0.0f, 0.0f));
+	mBottomWall->AddComponentOfType<BoxColliderComponent>(800.0f, 20.0f, exVector2(0.0f, 0.0f), true);
 
 	//mStateMachine = std::make_shared<StateMachine<Actor>>();
 	//mStateMachine->AddState("GamePlay", std::make_shared<GamePlay>());

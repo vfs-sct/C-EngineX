@@ -40,7 +40,7 @@ void Ball::OnBallCollided(std::weak_ptr<Actor> HitActor, const exVector2& HitPos
 			if (std::shared_ptr<CircleColliderComponent> collider = FindComponentOfType<CircleColliderComponent>())
 			{
 				// Randomize direction slightly
-				float randY = (rand() % 100 - 50) / 100.0f;  // Random value between -0.5 and 0.5
+				float randY = (rand() % 200) / 100.0f;  // Random value between -2 and 2
 				exVector2 newVel = exVector2(HitPosition.x < 400.0f ? 2.0f : -2.0f, randY);
 				collider->SetVelocity(newVel);
 			}

@@ -21,8 +21,9 @@ void PhysicsComponent::DoPhysics()
 	}
 }
 
-PhysicsComponent::PhysicsComponent(std::weak_ptr<Actor> owner, exVector2 velocity, bool isStatic, bool isGravityEnabled) : Component(owner)
+PhysicsComponent::PhysicsComponent(std::weak_ptr<Actor> owner, exVector2 velocity, bool isBoarder, bool isStatic, bool isGravityEnabled) : Component(owner)
 , mVelocity(velocity)
+, mIsBoarder(isBoarder)
 , mIsStatic(isStatic)
 , mIsGravityEnabled(isGravityEnabled)
 {
@@ -69,7 +70,13 @@ void PhysicsComponent::CollisionResolution()
 		return;
 	}
 
-	SetVelocity(mVelocity * -1.0f);
+	if (mIsBoarder)
+	{
+		SetVelocity(exVector2(mVelocity.x, mVelocity.y * -1));
+		return;
+	}
+	
+	SetVelocity(exVector2(mVelocity.x * -1, mVelocity.y));
 }
 
 void PhysicsComponent::SetVelocity(const exVector2 inVelocity)
