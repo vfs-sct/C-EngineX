@@ -1,0 +1,22 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "OutGame\\ComponentTypes.h.obj",
+            "outputs": [
+                "C:\\Users\\pg27haneul\\Documents\\EngineXForStudent\\OutGame\\vc143.pdb",
+                "OutGame\\",
+                "C:\\Users\\pg27haneul\\Documents\\EngineXForStudent\\OutGame\\ComponentTypes.h.ifc"
+            ],
+            "provides": [
+                {
+                    "logical-name": "Game\\Public\\Components\\ComponentTypes.h",
+                    "source-path": "c:\\users\\pg27haneul\\documents\\enginexforstudent\\game\\public\\components\\componenttypes.h",
+                    "lookup-method": "absolute"
+                }
+            ],
+            "requires": []
+        }
+    ]
+}
