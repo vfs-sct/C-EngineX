@@ -3,6 +3,9 @@
 #include "Game/Public/GameCore/GameCore.h"
 #include "Engine/Public/EngineTypes.h"
 
+class Out;
+class MyGame;
+
 class Ball : public Actor
 {
 
@@ -22,4 +25,3 @@ private:
 	exVector2 mBallInitialVelocity;
 
 };
-

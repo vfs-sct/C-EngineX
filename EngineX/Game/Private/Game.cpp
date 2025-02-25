@@ -22,6 +22,7 @@
 
 const char* gWindowName = "Sample EngineX Game";
 std::string MyGame::sTeamName = "Text";
+MyGame* MyGame::sInstance = nullptr;
 
 //-----------------------------------------------------------------
 //-----------------------------------------------------------------
@@ -29,9 +30,14 @@ std::string MyGame::sTeamName = "Text";
 MyGame::MyGame()
 	: mEngine(nullptr)
 	, mFontID(-1)
+	, mPlayer1Score(0)
+	, mPlayer2Score(0)
+	, mIsMainMenu(true)
+	, mIsGameOver(false)
 	, mUp2(false)
 	, mDown2(false)
 {
+	sInstance = this;
 }
 
 //-----------------------------------------------------------------
@@ -39,6 +45,8 @@ MyGame::MyGame()
 
 MyGame::~MyGame()
 {
+	if (sInstance == this)
+		sInstance = nullptr;
 }
 
 //-----------------------------------------------------------------
@@ -52,6 +60,15 @@ void MyGame::Initialize(exEngineInterface* pEngine)
 
 	mTextPosition.x = 50.0f;
 	mTextPosition.y = 50.0f;
+
+	mScorePosition1.x = 200.0f;
+	mScorePosition1.y = 50.0f;
+
+	mScorePosition2.x = 600.0f;
+	mScorePosition2.y = 50.0f;
+
+	mMenuTextPosition.x = 300.0f;
+	mMenuTextPosition.y = 300.0f;
 
 	Character1 = std::make_shared<Actor>();
 	Character1->AddComponentOfType<TransformComponent>(exVector2(40.0f, 300.0f));
@@ -74,6 +91,18 @@ void MyGame::Initialize(exEngineInterface* pEngine)
 
 	mOut2 = std::make_shared<Out>("out Line", exColor({ 150,20,30,255 }), exVector2(-30, 300.0f), exVector2(0.0f, 0.0f));
 	mOut2->BeginPlay();
+
+	// Create top wall
+	mTopWall = std::make_shared<Actor>();
+	mTopWall->AddComponentOfType<TransformComponent>(exVector2(400.0f, 10.0f));
+	mTopWall->AddComponentOfType<BoxRenderComponent>(800.0f, 20.0f, exColor({ 0,0,0,255 }));
+	mTopWall->AddComponentOfType<BoxColliderComponent>(800.0f, 20.0f, exVector2(0.0f, 0.0f));
+
+	// Create bottom wall
+	mBottomWall = std::make_shared<Actor>();
+	mBottomWall->AddComponentOfType<TransformComponent>(exVector2(400.0f, 590.0f));
+	mBottomWall->AddComponentOfType<BoxRenderComponent>(800.0f, 20.0f, exColor({ 0,0,0,255 }));
+	mBottomWall->AddComponentOfType<BoxColliderComponent>(800.0f, 20.0f, exVector2(0.0f, 0.0f));
 
 	//mStateMachine = std::make_shared<StateMachine<Actor>>();
 	//mStateMachine->AddState("GamePlay", std::make_shared<GamePlay>());
@@ -107,6 +136,58 @@ void MyGame::GetClearColor(exColor& color) const
 
 void MyGame::OnEvent(SDL_Event* pEvent)
 {
+	switch (pEvent->type)
+	{
+	case SDL_KEYDOWN:
+		switch (pEvent->key.keysym.sym)
+		{
+		case SDLK_w:
+			mUp1 = true;
+			break;
+		case SDLK_s:
+			mDown1 = true;
+			break;
+		case SDLK_UP:
+			mUp2 = true;
+			break;
+		case SDLK_DOWN:
+			mDown2 = true;
+			break;
+		case SDLK_SPACE:
+			if (mIsMainMenu)
+			{
+				mIsMainMenu = false;
+				// Reset game state
+				mPlayer1Score = 0;
+				mPlayer2Score = 0;
+				mBall->FindComponentOfType<TransformComponent>()->SetLocation(exVector2(400.0f, 300.0f));
+			}
+			else if (mIsGameOver)
+			{
+				mIsGameOver = false;
+				mIsMainMenu = true;
+			}
+			break;
+		}
+		break;
+	case SDL_KEYUP:
+		switch (pEvent->key.keysym.sym)
+		{
+		case SDLK_w:
+			mUp1 = false;
+			break;
+		case SDLK_s:
+			mDown1 = false;
+			break;
+		case SDLK_UP:
+			mUp2 = false;
+			break;
+		case SDLK_DOWN:
+			mDown2 = false;
+			break;
+		}
+		break;
+	}
 }
 
 //-----------------------------------------------------------------
@@ -129,90 +210,57 @@ void MyGame::OnEventsConsumed()
 
 void MyGame::Run(float fDeltaT)
 {
+	exColor textColor = { 255, 255, 255, 255 };
+
+	if (mIsMainMenu)
+	{
+		mEngine->DrawText(mFontID, mMenuTextPosition, "Press SPACE to Start", textColor, 0);
+		return;
+	}
+
+	if (mIsGameOver)
+	{
+		mEngine->DrawText(mFontID, mMenuTextPosition, "Player 1 Wins! Press SPACE to Restart", textColor, 0);
+		return;
+	}
+
+	// Update paddle positions with constraints
 	if (mUp1)
 	{
-		mPlayer1.y -= 400.0f * fDeltaT;
+		mPlayer1.y = std::max(mPlayer1.y - 400.0f * fDeltaT, 30.0f);  // 30.0f is minimum Y (accounting for wall)
 		Character1->FindComponentOfType<TransformComponent>()->SetLocation(mPlayer1);
 	}
 	else if (mDown1)
 	{
-		mPlayer1.y += 400.0f * fDeltaT;
+		mPlayer1.y = std::min(mPlayer1.y + 400.0f * fDeltaT, 570.0f);  // 570.0f is maximum Y (accounting for wall)
 		Character1->FindComponentOfType<TransformComponent>()->SetLocation(mPlayer1);
 	}
 
 	if (mUp2)
 	{
-		mPlayer2.y -= 400.0f * fDeltaT;
+		mPlayer2.y = std::max(mPlayer2.y - 400.0f * fDeltaT, 30.0f);
 		Character2->FindComponentOfType<TransformComponent>()->SetLocation(mPlayer2);
 	}
 	else if (mDown2)
 	{
-		mPlayer2.y += 400.0f * fDeltaT;
+		mPlayer2.y = std::min(mPlayer2.y + 400.0f * fDeltaT, 570.0f);
 		Character2->FindComponentOfType<TransformComponent>()->SetLocation(mPlayer2);
 	}
 
-	//if (Character)
-	//{
-	//	if (std::shared_ptr<TransformComponent> TransformComp = Character->FindComponentOfType<TransformComponent>())
-	//	{
-	//		//TransformComp->SetLocation(TransformComp->GetLocation() += mTextPosition);
-	//	}
+	// Draw scores
+	char score1Text[32];
+	char score2Text[32];
+	sprintf_s(score1Text, "%d", mPlayer1Score);
+	sprintf_s(score2Text, "%d", mPlayer2Score);
+	
+	mEngine->DrawText(mFontID, mScorePosition1, score1Text, textColor, 0);
+	mEngine->DrawText(mFontID, mScorePosition2, score2Text, textColor, 0);
 
-	//	for (std::shared_ptr<RenderComponent> RenderCompIter : Character->FindAllComponentOfType<RenderComponent>())
-	//	{
-	//		RenderCompIter->Render(mEngine);
-	//	}
-
-	//}
-
-	//exVector2 p1, p2;
-	//exColor c;
-	//float r;
-
-	//c.mColor[0] = 25;
-	//c.mColor[1] = 255;
-	//c.mColor[2] = 0;
-	//c.mColor[3] = 255;
-
-	//p1.x = 175.0f;
-	//p1.y = 175.0f;
-
-	//r = 25.0f;
-
-	//mEngine->DrawLineCircle(p1, r, c, 0);
-
-	//p1.x = 100.0f;
-	//p1.y = 100.0f;
-
-	//p2.x = 200.0f;
-	//p2.y = 200.0f;
-
-	//c.mColor[0] = 255;
-	//c.mColor[1] = 0;
-	//c.mColor[2] = 0;
-
-	//mEngine->DrawBox(p1, p2, c, 1);
-
-	//p1.x = 400.0f;
-	//p1.y = 400.0f;
-
-	//p2.x = 500.0f;
-	//p2.y = 500.0f;
-
-	//mEngine->DrawLineBox(p1, p2, c, 1);
-
-	//p1.x = 400.0f;
-	//p1.y = 400.0f;
-
-	//c.mColor[0] = 0;
-	//c.mColor[1] = 0;
-	//c.mColor[2] = 0;
-
-	//mEngine->DrawCircle(p1, r, c, 2);
-
-	//mEngine->DrawText(mFontID, mTextPosition, sTeamName.c_str(), c, 0);
-
-	//mStateMachine->Update(nullptr);
+	// Check for victory
+	if (mPlayer1Score >= 7)
+	{
+		mIsGameOver = true;
+	}
 
 	RENDER_ENGINE.Render(mEngine);
 	PHYSICS_ENGINE.PhysicsUpdate(fDeltaT);

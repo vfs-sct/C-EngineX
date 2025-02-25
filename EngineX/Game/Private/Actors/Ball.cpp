@@ -1,4 +1,6 @@
 #include "Game/Public/Actors/Ball.h"
+#include "Game/Public/Actors/Out.h"
+#include "Game/Public/Game.h"
 
 Ball::Ball(String shipName, exColor shipColor, exVector2 startingPos, exVector2 velocity) :
 	mBallName(shipName),
@@ -24,8 +26,34 @@ void Ball::BeginPlay()
 
 void Ball::OnBallCollided(std::weak_ptr<Actor> HitActor, const exVector2& HitPosition)
 {
-	if (std::shared_ptr<CircleRenderComponent> CircleRenderComp = FindComponentOfType<CircleRenderComponent>())
+	auto hitActorPtr = HitActor.lock();
+	if (!hitActorPtr) return;
+
+	if (auto outActor = std::dynamic_pointer_cast<Out>(hitActorPtr))
 	{
-		//CircleRenderComp->SetColor(exColor({ 15,255,60,255 }));
+		// Reset ball position
+		if (std::shared_ptr<TransformComponent> transform = FindComponentOfType<TransformComponent>())
+		{
+			transform->SetLocation(exVector2(400.0f, 300.0f));
+			
+			// Reset velocity
+			if (std::shared_ptr<CircleColliderComponent> collider = FindComponentOfType<CircleColliderComponent>())
+			{
+				// Randomize direction slightly
+				float randY = (rand() % 100 - 50) / 100.0f;  // Random value between -0.5 and 0.5
+				exVector2 newVel = exVector2(HitPosition.x < 400.0f ? 2.0f : -2.0f, randY);
+				collider->SetVelocity(newVel);
+			}
+			
+			// Update score in MyGame
+			if (HitPosition.x < 400.0f)  // Left side
+			{
+				MyGame::IncrementScore(2);  // Player 2 scores
+			}
+			else  // Right side
+			{
+				MyGame::IncrementScore(1);  // Player 1 scores
+			}
+		}
 	}
 }
