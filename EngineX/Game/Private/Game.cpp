@@ -222,6 +222,11 @@ void MyGame::Run(float fDeltaT)
 		mEngine->DrawText(mFontID, mMenuTextPosition, "Player 1 Wins! Press SPACE to Restart", textColor, 0);
 		return;
 	}
+	if (mIsGameOver2)
+	{
+		mEngine->DrawText(mFontID, mMenuTextPosition, "Player 2 Wins! Press SPACE to Restart", textColor, 0);
+		return;
+	}
 
 	// Update paddle positions with constraints
 	if (mUp1)
@@ -259,6 +264,10 @@ void MyGame::Run(float fDeltaT)
 	if (mPlayer1Score >= 7)
 	{
 		mIsGameOver = true;
+	}
+	if (mPlayer2Score >= 7)
+	{
+		mIsGameOver2 = true;
 	}
 
 	RENDER_ENGINE.Render(mEngine);

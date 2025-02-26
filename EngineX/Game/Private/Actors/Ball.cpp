@@ -34,19 +34,21 @@ void Ball::OnBallCollided(std::weak_ptr<Actor> HitActor, const exVector2& HitPos
 		// Reset ball position
 		if (std::shared_ptr<TransformComponent> transform = FindComponentOfType<TransformComponent>())
 		{
+			exVector2 ballPos = transform->GetLocation();
 			transform->SetLocation(exVector2(400.0f, 300.0f));
-			
+
 			// Reset velocity
 			if (std::shared_ptr<CircleColliderComponent> collider = FindComponentOfType<CircleColliderComponent>())
 			{
 				// Randomize direction slightly
-				float randY = (rand() % 200) / 100.0f;  // Random value between -2 and 2
-				exVector2 newVel = exVector2(HitPosition.x < 400.0f ? 2.0f : -2.0f, randY);
+				float randY = (rand() % 400) / 100.0f;  // Random value between -2 and 2
+				float xSpeed = 5 - randY;
+				exVector2 newVel = exVector2(ballPos.x < 400.0f ? xSpeed : -xSpeed, randY);
 				collider->SetVelocity(newVel);
 			}
 			
 			// Update score in MyGame
-			if (HitPosition.x < 400.0f)  // Left side
+			if (ballPos.x < 400.0f)  // Left side
 			{
 				MyGame::IncrementScore(2);  // Player 2 scores
 			}

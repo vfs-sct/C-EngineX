@@ -1,5 +1,3 @@
 ﻿  Scanning sources for module dependencies...
-  CircleColliderComponent.cpp
-  PhysicsComponent.cpp
-  Generating Code...
+  Ball.cpp
   GameEngineX.vcxproj -> C:\Users\Public\Repos\C-EngineX2\EngineX\Build\GameEngineXd.exe

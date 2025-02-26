@@ -51,6 +51,7 @@ private:
 	int                         mPlayer2Score;
 	bool                        mIsMainMenu;
 	bool                        mIsGameOver;
+	bool                        mIsGameOver2;
 	exVector2                   mScorePosition1;
 	exVector2                   mScorePosition2;
 	exVector2                   mMenuTextPosition;
